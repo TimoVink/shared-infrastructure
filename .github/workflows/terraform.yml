@@ -1,6 +1,10 @@
-name: 'Terraform'
+name: Terraform
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 permissions:
   contents: read
@@ -93,12 +97,7 @@ jobs:
                 body: output
               })
             }
-            
 
-      - name: Terraform Apply (DEV)
+      - name: Terraform Apply
         if: github.ref != 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false -var="environmentId=DEV"
-
-      - name: Terraform Apply (PRO)
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false -var="environmentId=PRO"
+        run: terraform apply -auto-approve -input=false
