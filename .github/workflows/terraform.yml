@@ -52,7 +52,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Prepare format of the comment
             const output = `
               #### Terraform Plan \`${{ steps.plan.outcome }}\`
               <details>
@@ -61,14 +60,7 @@ jobs:
               </details>
             `;
 
-            // If there exists an existing comment, update it, otherwise create a new one
-            const { data: comments } = await github.rest.issues.listComments({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number });
-            const botComment = comments.find(comment => comment.user.type === 'Bot' && comment.body.includes('Terraform Plan'))
-            if (botComment) {
-              github.rest.issues.updateComment({ comment_id: botComment.id, owner: context.repo.owner, repo: context.repo.repo, body: output })
-            } else {
-              github.rest.issues.createComment({ issue_number: context.issue.number, owner: context.repo.owner, repo: context.repo.repo, body: output })
-            }
+            github.rest.issues.createComment({ issue_number: context.issue.number, owner: context.repo.owner, repo: context.repo.repo, body: output })
 
       - name: Terraform Apply
         if: github.ref != 'refs/heads/main' && github.event_name == 'push'
