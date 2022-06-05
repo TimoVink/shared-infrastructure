@@ -61,8 +61,8 @@ jobs:
             <details>
             <summary>Expand</summary>
 
-            \`\`\`\n
-            ${process.env.PLAN}
+            \`\`\`
+            ${process.env.PLAN.trim()}
             \`\`\`
 
             </details>`;
