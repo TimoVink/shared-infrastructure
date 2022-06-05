@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: Terraform
     runs-on: ubuntu-latest
 
     defaults:
@@ -44,7 +44,6 @@ jobs:
       - name: terraform plan
         id: plan
         run: terraform plan -input=false -no-color
-        continue-on-error: true
 
       - name: Update PR
         uses: actions/github-script@v6
@@ -53,7 +52,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `
-              #### Terraform Plan \`${{ steps.plan.outcome }}\`
+              #### Terraform Plan
               <details>
                 <summary>Expand</summary>
                 <pre>${{ steps.plan.outputs.stdout }}</pre>
@@ -62,6 +61,6 @@ jobs:
 
             github.rest.issues.createComment({ issue_number: context.issue.number, owner: context.repo.owner, repo: context.repo.repo, body: output })
 
-      - name: Terraform Apply
+      - name: terraform apply
         if: github.ref != 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false -no-color
