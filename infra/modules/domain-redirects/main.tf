@@ -46,5 +46,6 @@ resource "aws_cloudfront_distribution" "this" {
 
   viewer_certificate {
     acm_certificate_arn = var.certificate_arns[each.key]
+    ssl_support_method  = "sni-only"
   }
 }
