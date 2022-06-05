@@ -9,5 +9,5 @@ provider "aws" {
 }
 
 module "iam" {
-    source = "./modules/iam"
+  source = "./modules/iam"
 }
