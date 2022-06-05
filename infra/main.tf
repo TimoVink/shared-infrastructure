@@ -67,4 +67,8 @@ module "domain_redirects" {
   certificate_arns = {
     for dn in local.secondary_domain_names : dn => module.global_certificate[dn].certificate_arn
   }
+
+  hosted_zone_ids = {
+    for dn in local.secondary_domain_names : dn => module.dns[dn].hosted_zone_id
+  }
 }

@@ -64,3 +64,17 @@ resource "aws_cloudfront_distribution" "this" {
     ssl_support_method  = "sni-only"
   }
 }
+
+resource "aws_route53_record" "this" {
+  for_each = toset(var.secondary_domain_names)
+
+  zone_id = var.hosted_zone_ids[each.key]
+  name    = each.key
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.this[each.key].domain_name
+    zone_id                = aws_cloudfront_distribution.this[each.key].hosted_zone_id
+    evaluate_target_health = false
+  }
+}
