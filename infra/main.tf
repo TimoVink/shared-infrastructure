@@ -28,5 +28,6 @@ module "iam" {
 module "dns" {
   source = "./modules/dns"
 
-  domain_names = local.all_domain_names
+  for_each    = toset(local.all_domain_names)
+  domain_name = each.key
 }
