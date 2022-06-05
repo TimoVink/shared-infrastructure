@@ -12,3 +12,8 @@ variable "certificate_arns" {
   type        = map(string)
   description = "A map from domain names to ARNs of ACM certificates in the us-east-1 region"
 }
+
+variable "hosted_zone_ids" {
+  type        = map(string)
+  description = "A map from domain names to IDs of Hosted Zones"
+}
