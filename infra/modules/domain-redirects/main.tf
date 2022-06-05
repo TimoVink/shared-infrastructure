@@ -26,6 +26,11 @@ resource "aws_cloudfront_distribution" "this" {
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
     target_origin_id       = "default"
     viewer_protocol_policy = "allow-all"
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.redirect.arn
+    }
   }
 
   origin {
