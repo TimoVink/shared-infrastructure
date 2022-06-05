@@ -57,9 +57,7 @@ jobs:
               #### Terraform Plan \`${{ steps.plan.outcome }}\`
               <details>
                 <summary>Expand</summary>
-                \`\`\`\n
-                ${{ steps.plan.outputs.stdout }}
-                \`\`\`
+                <pre>${{ steps.plan.outputs.stdout }}</pre>
               </details>
             `;
 
