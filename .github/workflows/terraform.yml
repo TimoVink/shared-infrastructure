@@ -43,6 +43,7 @@ jobs:
 
       - name: terraform plan
         id: plan
+        if: github.ref != 'refs/heads/main' || github.event_name != 'push'
         run: terraform plan -input=false -no-color
 
       - name: Update PR
