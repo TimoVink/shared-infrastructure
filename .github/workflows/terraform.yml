@@ -43,25 +43,36 @@ jobs:
 
       - name: terraform plan
         id: plan
-        if: github.ref != 'refs/heads/main' || github.event_name != 'push'
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
         run: terraform plan -input=false -no-color
 
       - name: Update PR
         uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          PLAN: "${{ steps.plan.outputs.stdout }}"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `
-              #### Terraform Plan
-              <details>
-                <summary>Expand</summary>
-                <pre>${{ steps.plan.outputs.stdout }}</pre>
-              </details>
-            `;
+            #### Terraform Plan
+            <details>
+            <summary>Expand</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>`;
 
             github.rest.issues.createComment({ issue_number: context.issue.number, owner: context.repo.owner, repo: context.repo.repo, body: output })
 
+      - name: Check For Success
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
       - name: terraform apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve -input=false -no-color

@@ -57,3 +57,14 @@ module "global_certificate" {
   domain_name    = each.key
   hosted_zone_id = module.dns[each.key].hosted_zone_id
 }
+
+module "domain_redirects" {
+  source = "./modules/domain-redirects"
+
+  primary_domain_name    = local.primary_domain_name
+  secondary_domain_names = local.secondary_domain_names
+
+  certificate_arns = {
+    for dn in local.secondary_domain_names : dn => module.global_certificate[dn].certificate_arn
+  }
+}
