@@ -39,6 +39,13 @@ module "iam" {
   ]
 }
 
+module "budget" {
+  source = "./modules/budget"
+
+  monthly_budget     = 10
+  notification_email = "timovink@gmail.com"
+}
+
 module "dns" {
   source = "./modules/dns"
 
