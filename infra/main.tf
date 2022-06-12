@@ -32,6 +32,11 @@ locals {
 
 module "iam" {
   source = "./modules/iam"
+
+  admin_users = [
+    "deployer",
+    "tvink"
+  ]
 }
 
 module "dns" {
