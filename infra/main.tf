@@ -20,14 +20,21 @@ provider "aws" {
 }
 
 locals {
-  primary_domain_name = "timovink.dev"
-  secondary_domain_names = [
-    "timovink.com",
-    "timovink.ca",
-    "timovink.app"
-  ]
+  domain_configs = {
+    "timovink.dev" = [
+      "timovink.com",
+      "timovink.ca",
+      "timovink.app"
+    ],
+    "jackievink.com" = [
+      "jackievink.ca"
+    ]
+  }
 
-  all_domain_names = concat([local.primary_domain_name], local.secondary_domain_names)
+  all_domain_names = concat(
+    keys(local.domain_configs),
+    flatten(values(local.domain_configs))
+  )
 }
 
 module "iam" {
@@ -71,16 +78,17 @@ module "global_certificate" {
 }
 
 module "domain_redirects" {
-  source = "./modules/domain-redirects"
+  for_each = local.domain_configs
+  source   = "./modules/domain-redirects"
 
-  primary_domain_name    = local.primary_domain_name
-  secondary_domain_names = local.secondary_domain_names
+  primary_domain_name    = each.key
+  secondary_domain_names = each.value
 
   certificate_arns = {
-    for dn in local.secondary_domain_names : dn => module.global_certificate[dn].certificate_arn
+    for dn in each.value : dn => module.global_certificate[dn].certificate_arn
   }
 
   hosted_zone_ids = {
-    for dn in local.secondary_domain_names : dn => module.dns[dn].hosted_zone_id
+    for dn in each.value : dn => module.dns[dn].hosted_zone_id
   }
 }
