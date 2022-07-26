@@ -20,12 +20,12 @@ AWS budgets for both forecasted and actual costs to prevent any surprises.
 
 ### DNS
 
-Route 53 Hosted Zones for all domains I have currently own. The actual DNS records for these zones will lagely live within their respective application repositories.
+Route 53 Hosted Zones for all domains I manage. The actual DNS records for these zones will lagely live within their respective application repositories.
 
 ### TLS Certificates
 
-TLS certificates for all domains I currently own.
+TLS certificates for all domains I manage.
 
 ### Domain Redirects
 
-I own the `timovink.*` domain for a few different TLDs. For now I'd like to use `timovink.dev` as the main one, and sinmply redirect all others to it.
+For some of the domain names I manage, I own several TLDs. In this case I'd like to redirect all "secondary" TLDs to the primary TLD.
