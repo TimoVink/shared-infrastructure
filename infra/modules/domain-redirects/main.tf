@@ -1,5 +1,9 @@
+locals {
+  primary_domain_id = join("", regexall("[a-z0-9]", lower(var.primary_domain_name)))
+}
+
 resource "aws_cloudfront_function" "redirect" {
-  name    = "tv-sharedinfra-redirecttoprimary"
+  name    = "tv-sharedinfra-redirectto${local.primary_domain_id}"
   runtime = "cloudfront-js-1.0"
   publish = true
   code    = <<-EOF
