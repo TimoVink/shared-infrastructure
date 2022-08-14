@@ -24,6 +24,7 @@ resource "aws_cloudfront_distribution" "this" {
 
   enabled = true
   aliases = [each.key]
+  comment = "Redirect ${each.key} to ${var.primary_domain_name}"
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
