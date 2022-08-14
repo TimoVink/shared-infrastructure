@@ -24,7 +24,8 @@ locals {
     "timovink.dev" = [
       "timovink.com",
       "timovink.ca",
-      "timovink.app"
+      "timovink.app",
+      "timovink.me"
     ],
     "jackievink.com" = [
       "jackievink.ca"
