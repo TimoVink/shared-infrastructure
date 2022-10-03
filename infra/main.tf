@@ -3,7 +3,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "tv-sharedinfra"
+      Project = "shared-infrastructure"
     }
   }
 }
@@ -14,7 +14,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "tv-sharedinfra"
+      Project = "shared-infrastructure"
     }
   }
 }

@@ -3,7 +3,7 @@ terraform {
     organization = "timovink"
 
     workspaces {
-      name = "infra-shared"
+      name = "shared-infrastructure"
     }
   }
 
