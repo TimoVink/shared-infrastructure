@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_cloudfront_function" "redirect" {
-  name    = "tv-sharedinfra-redirectto${local.primary_domain_id}"
+  name    = "redirect-to-${local.primary_domain_id}"
   runtime = "cloudfront-js-1.0"
   publish = true
   code    = <<-EOF
