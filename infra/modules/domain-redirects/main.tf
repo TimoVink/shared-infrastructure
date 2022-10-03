@@ -17,6 +17,10 @@ resource "aws_cloudfront_function" "redirect" {
         };
     }
   EOF
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_cloudfront_distribution" "this" {
