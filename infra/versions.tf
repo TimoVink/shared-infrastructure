@@ -3,14 +3,14 @@ terraform {
     organization = "timovink"
 
     workspaces {
-      name = "infra-shared"
+      name = "shared-infrastructure"
     }
   }
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.23"
+      version = "~> 4.33"
     }
   }
 }
