@@ -93,3 +93,7 @@ module "domain_redirects" {
     for dn in each.value : dn => module.dns[dn].hosted_zone_id
   }
 }
+
+module "vpc" {
+  source = "./modules/vpc"
+}
